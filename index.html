@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plataforma de Feedback</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-slate-950 text-slate-100">
+    <div class="mx-auto flex min-h-screen max-w-6xl flex-col px-6 py-8">
+      <header class="mb-8">
+        <div class="flex flex-col gap-4 rounded-3xl bg-slate-900/70 p-6 shadow-lg shadow-slate-950/50">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <p class="text-sm uppercase tracking-[0.3em] text-slate-400">Voz do cliente &amp; do time</p>
+              <h1 class="text-3xl font-semibold text-white">Plataforma de Feedback e Sugestões</h1>
+              <p class="mt-2 text-sm text-slate-300">
+                Colete, analise e gerencie feedbacks de clientes e funcionários em múltiplos estabelecimentos.
+              </p>
+            </div>
+            <div class="hidden items-center gap-3 rounded-2xl border border-slate-700/60 bg-slate-900/60 px-4 py-3 text-xs uppercase tracking-[0.2em] text-slate-400 md:flex">
+              <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+              LocalStorage ativo
+            </div>
+          </div>
+          <nav class="flex flex-wrap gap-3">
+            <button
+              type="button"
+              data-tab="coleta"
+              class="tab-btn rounded-full border border-emerald-400/60 bg-emerald-500/20 px-5 py-2 text-sm font-semibold text-emerald-200 transition hover:bg-emerald-500/30"
+            >
+              Interface de coleta
+            </button>
+            <button
+              type="button"
+              data-tab="painel"
+              class="tab-btn rounded-full border border-slate-700/60 bg-slate-900/60 px-5 py-2 text-sm font-semibold text-slate-200 transition hover:border-slate-500/60"
+            >
+              Painel de gestão
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      <main class="flex-1 space-y-10">
+        <section id="view-coleta" class="space-y-8">
+          <div class="grid gap-6 lg:grid-cols-[2fr_1fr]">
+            <form
+              id="feedback-form"
+              class="flex flex-col gap-4 rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-lg"
+            >
+              <div>
+                <h2 class="text-xl font-semibold text-white">Registrar feedback</h2>
+                <p class="text-sm text-slate-400">Envie críticas, elogios ou sugestões em poucos passos.</p>
+              </div>
+
+              <div class="grid gap-4 md:grid-cols-2">
+                <div class="flex flex-col gap-2">
+                  <label class="text-sm font-medium">Nome</label>
+                  <input
+                    class="rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white focus:border-emerald-400 focus:outline-none"
+                    name="name"
+                    placeholder="Nome completo"
+                    required
+                  />
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label class="text-sm font-medium">Tipo de pessoa</label>
+                  <select
+                    class="rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white focus:border-emerald-400 focus:outline-none"
+                    name="personType"
+                    required
+                  >
+                    <option value="cliente">Cliente</option>
+                    <option value="funcionario">Funcionário</option>
+                  </select>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label class="text-sm font-medium">Estabelecimento</label>
+                  <select
+                    class="rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white focus:border-emerald-400 focus:outline-none"
+                    name="company"
+                    id="company-select"
+                    required
+                  ></select>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label class="text-sm font-medium">Telefone (opcional)</label>
+                  <input
+                    class="rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white focus:border-emerald-400 focus:outline-none"
+                    name="phone"
+                    placeholder="(00) 00000-0000"
+                  />
+                </div>
+                <div class="flex flex-col gap-2 md:col-span-2">
+                  <label class="text-sm font-medium">Email (opcional)</label>
+                  <input
+                    type="email"
+                    class="rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white focus:border-emerald-400 focus:outline-none"
+                    name="email"
+                    placeholder="nome@email.com"
+                  />
+                </div>
+                <div class="flex flex-col gap-2 md:col-span-2">
+                  <label class="text-sm font-medium">Feedback</label>
+                  <textarea
+                    class="min-h-[120px] rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white focus:border-emerald-400 focus:outline-none"
+                    name="message"
+                    placeholder="Descreva sua experiência ou sugestão..."
+                    required
+                  ></textarea>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="mt-2 inline-flex items-center justify-center rounded-full bg-emerald-500 px-6 py-2 text-sm font-semibold text-emerald-950 transition hover:bg-emerald-400"
+              >
+                Enviar feedback
+              </button>
+              <p class="text-xs text-slate-400">
+                Os dados ficam armazenados localmente no navegador (localStorage).
+              </p>
+            </form>
+
+            <div class="space-y-6">
+              <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+                <h3 class="text-lg font-semibold text-white">Como funciona</h3>
+                <ul class="mt-4 space-y-3 text-sm text-slate-300">
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+                    Coleta rápida para clientes e funcionários.
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+                    Multiempresas com cadastro de unidades.
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+                    Painel com filtros e gráficos instantâneos.
+                  </li>
+                </ul>
+              </div>
+              <div class="rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 p-6">
+                <h3 class="text-lg font-semibold text-white">Indicadores locais</h3>
+                <div class="mt-4 grid gap-4">
+                  <div class="rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+                    <p class="text-xs uppercase tracking-wider text-slate-400">Feedbacks hoje</p>
+                    <p id="metric-today" class="text-2xl font-semibold text-emerald-300">0</p>
+                  </div>
+                  <div class="rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+                    <p class="text-xs uppercase tracking-wider text-slate-400">Média por empresa</p>
+                    <p id="metric-average" class="text-2xl font-semibold text-emerald-300">0</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-painel" class="hidden space-y-8">
+          <div class="grid gap-6 lg:grid-cols-3">
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+              <p class="text-xs uppercase tracking-wider text-slate-400">Total de feedbacks</p>
+              <p id="stat-feedbacks" class="mt-2 text-3xl font-semibold text-white">0</p>
+              <p class="text-sm text-slate-400">Inclui clientes e funcionários.</p>
+            </div>
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+              <p class="text-xs uppercase tracking-wider text-slate-400">Pessoas cadastradas</p>
+              <p id="stat-people" class="mt-2 text-3xl font-semibold text-white">0</p>
+              <p class="text-sm text-slate-400">Base única para contatos.</p>
+            </div>
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+              <p class="text-xs uppercase tracking-wider text-slate-400">Empresas ativas</p>
+              <p id="stat-companies" class="mt-2 text-3xl font-semibold text-white">0</p>
+              <p class="text-sm text-slate-400">Multiestabelecimentos.</p>
+            </div>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-[2fr_1fr]">
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+              <div class="flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <h2 class="text-xl font-semibold text-white">Painel de feedbacks</h2>
+                  <p class="text-sm text-slate-400">Filtros inteligentes e visão consolidada.</p>
+                </div>
+                <div class="flex flex-wrap gap-3 text-sm">
+                  <input
+                    id="search-input"
+                    class="rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white"
+                    placeholder="Buscar por nome ou mensagem"
+                  />
+                  <select
+                    id="filter-company"
+                    class="rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white"
+                  ></select>
+                  <select
+                    id="filter-type"
+                    class="rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white"
+                  >
+                    <option value="">Todos</option>
+                    <option value="cliente">Clientes</option>
+                    <option value="funcionario">Funcionários</option>
+                  </select>
+                </div>
+              </div>
+
+              <div id="feedback-list" class="mt-6 space-y-4"></div>
+            </div>
+
+            <div class="space-y-6">
+              <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+                <h3 class="text-lg font-semibold text-white">Feedbacks por tipo</h3>
+                <div id="chart-type" class="mt-4 space-y-3"></div>
+              </div>
+              <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+                <h3 class="text-lg font-semibold text-white">Feedbacks por empresa</h3>
+                <div id="chart-company" class="mt-4 space-y-3"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+              <h3 class="text-lg font-semibold text-white">Cadastro de empresas</h3>
+              <form id="company-form" class="mt-4 flex flex-col gap-3">
+                <input
+                  class="rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white"
+                  name="companyName"
+                  placeholder="Nome do estabelecimento"
+                  required
+                />
+                <button
+                  type="submit"
+                  class="inline-flex items-center justify-center rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-900"
+                >
+                  Adicionar empresa
+                </button>
+              </form>
+              <ul id="company-list" class="mt-4 space-y-2 text-sm text-slate-300"></ul>
+            </div>
+
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+              <h3 class="text-lg font-semibold text-white">Cadastro de pessoas</h3>
+              <form id="person-form" class="mt-4 grid gap-3 md:grid-cols-2">
+                <input
+                  class="rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white"
+                  name="personName"
+                  placeholder="Nome"
+                  required
+                />
+                <select
+                  class="rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white"
+                  name="personRole"
+                  required
+                >
+                  <option value="cliente">Cliente</option>
+                  <option value="funcionario">Funcionário</option>
+                </select>
+                <select
+                  class="rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white"
+                  name="personCompany"
+                  id="person-company"
+                  required
+                ></select>
+                <input
+                  class="rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-white"
+                  name="personContact"
+                  placeholder="Contato (telefone ou email)"
+                />
+                <button
+                  type="submit"
+                  class="md:col-span-2 inline-flex items-center justify-center rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-900"
+                >
+                  Adicionar pessoa
+                </button>
+              </form>
+              <ul id="person-list" class="mt-4 space-y-2 text-sm text-slate-300"></ul>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="mt-10 text-center text-xs text-slate-500">
+        Template local para coleta e gestão de feedbacks (localStorage).
+      </footer>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
